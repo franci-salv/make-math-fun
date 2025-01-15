@@ -82,3 +82,6 @@ print(f'Out of {totalq} questions, you got {correct_answers} correct, which is {
 #obiously add more shit like to the power of, roots, matrices, vectors etc.
 #make a choice menu
 #somehow find a way to 'show' like integration signs and that shit cuz it makes it a lot easier to read
+
+
+#15/1 i am sick heavily so im slacking
