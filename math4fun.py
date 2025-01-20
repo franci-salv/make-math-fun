@@ -6,15 +6,35 @@ print('Since I only have like 10 minutes, we\'ll just do some basics +, -, *, /.
 i = 0
 correct_answers = 0
 totalq = 0
-OPERATORS = ['+', '-', '*', '/']  # This is just helpful to inspect the code
+OPERATORS = ['+', '-', '*', '/', '^']  # This is just helpful to inspect the code
 
 
 def addsubmult():
     # Generate random operator and numbers
-    random_number = random.randint(1, 4)
+    random_number = random.randint(1, 5)
     computational_number1 = random.randint(1, 100)
     computational_number2 = random.randint(1, 100)
     return random_number, computational_number1, computational_number2
+
+
+def stopping_game(user_ans, answer):
+    """
+    Check if the user's answer is correct or if they want to stop the game.
+
+    :param user_ans: The user's input as a string.
+    :param answer: The correct answer as an integer.
+    :return: True if the user wants to stop, False otherwise.
+    """
+    if user_ans.lower() == 'stop':
+        return True  # Signal to stop the game
+    elif user_ans.isdigit() and int(user_ans) == answer:
+        print('Correct!')
+        global correct_answers
+        correct_answers += 1
+        return False  # Continue the game
+    else:
+        print(f'Wrong! The correct answer is {answer}.')
+        return False  # Continue the game
 
 
 while i != 1:
@@ -25,66 +45,45 @@ while i != 1:
         answer = computational_number1 + computational_number2
         print(f'What is the answer of {computational_number1} + {computational_number2}?')
         user_ans = input('Your answer: ')
-        if user_ans.lower() == 'stop':
+        if stopping_game(user_ans, answer):
             break
-        elif int(user_ans) == answer:
-            print('Correct!')
-            correct_answers += 1
-        else:
-            print(f'Wrong! The correct answer is {answer}.')
-    
+
     elif random_number == 2:  # Subtraction
         answer = computational_number2 - computational_number1
         print(f'What is the answer of {computational_number2} - {computational_number1}?')
         user_ans = input('Your answer: ')
-        if user_ans.lower() == 'stop':
+        if stopping_game(user_ans, answer):
             break
-        elif int(user_ans) == answer:
-            print('Correct!')
-            correct_answers += 1
-        else:
-            print(f'Wrong! The correct answer is {answer}.')
-    
+
     elif random_number == 3:  # Multiplication
         answer = computational_number1 * computational_number2
         print(f'What is the answer of {computational_number1} * {computational_number2}?')
         user_ans = input('Your answer: ')
-        if user_ans.lower() == 'stop':
+        if stopping_game(user_ans, answer):
             break
-        elif int(user_ans) == answer:
-            print('Correct!')
-            correct_answers += 1
-        else:
-            print(f'Wrong! The correct answer is {answer}.')
-    
+
     elif random_number == 4:  # Division
         computational_number2 = random.randint(1, 100)
         computational_number1 = random.randint(1, 20) * computational_number2
-        answer = computational_number1 // computational_number2  # Use integer division
+        answer = computational_number1 // computational_number2  # Integer division
         print(f'What is the answer of {computational_number1} / {computational_number2}?')
         user_ans = input('Your answer: ')
-        if user_ans.lower() == 'stop':
+        if stopping_game(user_ans, answer):
             break
-        elif int(user_ans) == answer:
-            print('Correct!')
-            correct_answers += 1
-        else:
-            print(f'Wrong! The correct answer is {answer}.')
+
+    elif random_number == 5:  # Powers
+        computational_number2 = random.randint(1, 6)
+        computational_number1 = random.randint(1, 10)
+        answer = computational_number1 ** computational_number2
+        print(f'What is the answer of {computational_number1} ^ {computational_number2}?')
+        user_ans = input('Your answer: ')
+        if stopping_game(user_ans, answer):
+            break
+
     totalq += 1
 
-
-print(f'Out of {totalq} questions, you got {correct_answers} correct, which is {(correct_answers / totalq) * 100:.2f}%.')
-
-
-
-
-#potential improvement call the numbers by function (so specific parameters per operator)  cuz no one finna be doing 99*45 in their head for fun
-#obiously add more shit like to the power of, roots, matrices, vectors etc.
-#make a choice menu
-#somehow find a way to 'show' like integration signs and that shit cuz it makes it a lot easier to read
-
-
-#15/1 i am sick heavily so im slacking
-#16/1 still sick this is truly unfortunate timing
-#EMILY IS HEREEEE 
-#from tmrw I'll start properly coding on this project
+# Print final results
+if totalq > 0:
+    print(f'Out of {totalq} questions, you got {correct_answers} correct, which is {(correct_answers / totalq) * 100:.2f}%.')
+else:
+    print("No questions were answered.")
