@@ -1,99 +1,86 @@
 import random
-import numpy as np
+import re
 
 print('Hey! For when you just wanna procrastinate and don’t feel like working, you can always come play this game.')
-print('Since I only have like 10 minutes, we\'ll just do some basics +, -, *, /, ^, and roots.')
+print('We\'ll just do some basics +, -, *, /, ^, and roots.')
 
-i = 0
 correct_answers = 0
 totalq = 0
 OPERATORS = ['+', '-', '*', '/', '^', 'root']  # Adding root operation
 
-def addsubmult():
-    # Generate random operator and numbers
-    random_number = random.randint(1, 6)  # Updated range to include root
-    computational_number1 = random.randint(40, 1000)
-    computational_number2 = random.randint(40, 1000)
-    return random_number, computational_number1, computational_number2
+def generate_problem():
+    operation = random.choice(OPERATORS)
+    if operation in ['+', '-']:
+        num1 = random.randint(10, 1000)
+        num2 = random.randint(10, 1000)
+    elif operation == '*':
+        num1 = random.randint(1, 100)
+        num2 = random.randint(1, 100)
+    elif operation == '/':
+        num2 = random.randint(1, 20)
+        num1 = num2 * random.randint(1, 10)  # Ensure divisibility
+    elif operation == '^':
+        num1 = random.randint(1, 10)
+        num2 = random.randint(1, 5)
+    elif operation == 'root':
+        num2 = random.randint(2, 4)
+        num1 = random.randint(2, 20) ** num2  # Ensure perfect roots
+    return operation, num1, num2
 
-def stopping_game(user_ans, answer):
+def extract_number(input_text):
     """
-    Check if the user's answer is correct or if they want to stop the game.
+    Extracts the first valid number from the user's input.
+    :param input_text: The user's input as a string.
+    :return: The extracted number as a float, or None if no valid number is found.
+    """
+    numbers = re.findall(r'[-+]?\d*\.?\d+', input_text)  # Regex to find numbers
+    if numbers:
+        return float(numbers[-1])  # Return the last number (assumes it is the user's final answer)
+    return None
 
-    :param user_ans: The user's input as a string.
-    :param answer: The correct answer as an integer.
-    :return: True if the user wants to stop, False otherwise.
-    """
-    if user_ans.lower() == 'stop':
-        return True  # Signal to stop the game
-    try:
-        user_ans_float = float(user_ans)
-        if np.isclose(user_ans_float, answer, atol=0.01):
+def check_answer(user_ans, correct_ans, tolerance=0.01):
+    # Extract the last number in the input
+    extracted_number = extract_number(user_ans)
+    if extracted_number is not None:
+        if abs(extracted_number - correct_ans) <= tolerance:
             print('Correct!')
-            global correct_answers
-            correct_answers += 1
-            return False  # Continue the game
+            return False, True  # Continue and mark as correct
         else:
-            print(f'Wrong! The correct answer is {answer:.2f}.')
-            return False  # Continue the game
-    except ValueError:
-        print('Invalid input! Please enter a number or "stop".')
-        return False  # Continue the game
+            print(f'Wrong! The correct answer is {correct_ans:.2f}.')
+            return False, False
+    else:
+        if user_ans.lower() == 'stop':
+            return True, False  # Stop the game
+        print('Invalid input! Please provide a valid number.')
+        return False, False
 
-while i != 1:
-    random_number, computational_number1, computational_number2 = addsubmult()
-    print('If you wanna stop, just type "stop" and then press enter:')
+while True:
+    operation, num1, num2 = generate_problem()
+    if operation == '+':
+        answer = num1 + num2
+        print(f'What is {num1} + {num2}?')
+    elif operation == '-':
+        answer = num1 - num2
+        print(f'What is {num1} - {num2}?')
+    elif operation == '*':
+        answer = num1 * num2
+        print(f'What is {num1} * {num2}?')
+    elif operation == '/':
+        answer = round(num1 / num2, 2)
+        print(f'What is {num1} / {num2}? (Round to 2 decimal places)')
+    elif operation == '^':
+        answer = num1 ** num2
+        print(f'What is {num1} ^ {num2}?')
+    elif operation == 'root':
+        answer = round(num1 ** (1 / num2), 2)
+        print(f'What is the {num2}-th root of {num1}? (Round to 2 decimal places)')
 
-    if random_number == 1:  # Addition
-        answer = computational_number1 + computational_number2
-        print(f'What is the answer of {computational_number1} + {computational_number2}?')
-        user_ans = input('Your answer: ')
-        if stopping_game(user_ans, answer):
-            break
-
-    elif random_number == 2:  # Subtraction
-        answer = computational_number2 - computational_number1
-        print(f'What is the answer of {computational_number2} - {computational_number1}?')
-        user_ans = input('Your answer: ')
-        if stopping_game(user_ans, answer):
-            break
-
-    elif random_number == 3:  # Multiplication
-        computational_number1 = random.randint(1, 100)
-        computational_number2 = random.randint(1, 100)
-        answer = computational_number1 * computational_number2
-        print(f'What is the answer of {computational_number1} * {computational_number2}?')
-        user_ans = input('Your answer: ')
-        if stopping_game(user_ans, answer):
-            break
-
-    elif random_number == 4:  # Division
-        computational_number2 = random.randint(1, 100)
-        computational_number1 = random.randint(1, 20) * computational_number2
-        answer = computational_number1 // computational_number2  # Integer division
-        print(f'What is the answer of {computational_number1} / {computational_number2}?')
-        user_ans = input('Your answer: ')
-        if stopping_game(user_ans, answer):
-            break
-
-    elif random_number == 5:  # Powers
-        computational_number2 = random.randint(1, 6)
-        computational_number1 = random.randint(1, 10)
-        answer = computational_number1 ** computational_number2
-        print(f'What is the answer of {computational_number1} ^ {computational_number2}?')
-        user_ans = input('Your answer: ')
-        if stopping_game(user_ans, answer):
-            break
-
-    elif random_number == 6:  # Roots
-        computational_number1 = random.randint(2, 100)
-        computational_number2 = random.randint(2, 5)  # Root degree (e.g., square root, cube root)
-        answer = round(computational_number1 ** (1 / computational_number2), 2)  # Calculate the root
-        print(f'What is the {computational_number2}-th root of {computational_number1}? (Round to 2 decimal places)')
-        user_ans = input('Your answer: ')
-        if stopping_game(user_ans, answer):
-            break
-
+    user_ans = input('Your answer: ')
+    stop_game, is_correct = check_answer(user_ans, answer)
+    if stop_game:
+        break
+    if is_correct:
+        correct_answers += 1
     totalq += 1
 
 # Print final results
