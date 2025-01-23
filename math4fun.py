@@ -99,3 +99,6 @@ if totalq > 0:
     print(f'Out of {totalq} questions, you got {correct_answers} correct, which is {(correct_answers / totalq) * 100:.2f}%.')
 else:
     print("No questions were answered.")
+
+
+#https://wumbo.net/operators/ here are ideas of other operators we can add
