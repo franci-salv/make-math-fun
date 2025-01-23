@@ -12,8 +12,8 @@ OPERATORS = ['+', '-', '*', '/', '^', 'root']  # Adding root operation
 def addsubmult():
     # Generate random operator and numbers
     random_number = random.randint(1, 6)  # Updated range to include root
-    computational_number1 = random.randint(1, 100)
-    computational_number2 = random.randint(1, 100)
+    computational_number1 = random.randint(40, 1000)
+    computational_number2 = random.randint(40, 1000)
     return random_number, computational_number1, computational_number2
 
 def stopping_game(user_ans, answer):
@@ -59,6 +59,8 @@ while i != 1:
             break
 
     elif random_number == 3:  # Multiplication
+        computational_number1 = random.randint(1, 100)
+        computational_number2 = random.randint(1, 100)
         answer = computational_number1 * computational_number2
         print(f'What is the answer of {computational_number1} * {computational_number2}?')
         user_ans = input('Your answer: ')
