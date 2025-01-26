@@ -94,3 +94,8 @@ else:
 #create a file on computer to see user preferences that way everytime they play they dont have to deactivate certain modes
 #make an app on windows in the future with some UI
 #just wanna add my daily repos
+
+
+
+#pyinstaller --onefile --windowed math4fun.py
+
