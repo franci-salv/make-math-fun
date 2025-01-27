@@ -98,4 +98,4 @@ else:
 
 
 #pyinstaller --onefile --windowed math4fun.py
-
+#since im tired today I'm just gonna read about app development with python to try to learn how it works
