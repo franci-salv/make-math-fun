@@ -98,3 +98,4 @@ if __name__ == "__main__":
     root.mainloop()
 
 #rest day
+#another rest day cuz im w pooks
