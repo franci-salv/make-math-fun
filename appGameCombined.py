@@ -98,4 +98,5 @@ if __name__ == "__main__":
     root.mainloop()
 
 #rest day
+#right now if i type the answer in the bar it doesn't recognise the answer is there
 #another rest day cuz im w pooks

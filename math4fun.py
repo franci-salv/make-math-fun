@@ -93,6 +93,7 @@ else:
 #https://wumbo.net/operators/ here are ideas of other operators we can add
 #create a file on computer to see user preferences that way everytime they play they dont have to deactivate certain modes
 #make an app on windows in the future with some UI
+
 #just wanna add my daily repos
 
 
