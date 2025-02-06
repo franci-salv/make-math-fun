@@ -59,6 +59,7 @@ def read_csv_to_dict(filename):
         data_dict["validate"] = validate
 
     return data_dict
+#Issue right now is the format of the dictionary each column cell in column 1 should be coupled with the adjacent one
 
 # Example usage
 csv_file = r"C:\Users\franc\OneDrive\Bureaublad\codespace\Githubcode\Myprojects\Lets make math fun\make-math-fun-1\problems.csv"
