@@ -1,6 +1,8 @@
 import tkinter as tk
 import random
 import re
+import csv
+
 
 # Game logic
 OPERATORS = ['+', '-', '*', '/', '^', 'root']
@@ -24,20 +26,62 @@ def generate_problem():
         num1 = random.randint(2, 20) ** num2
     return operation, num1, num2
 
+
+import csv
+
+def read_csv_to_dict(filename):
+    """ Reads a CSV file and stores two lists into a dictionary. """
+    data_dict = {}
+
+    with open(filename, mode='r', newline='', encoding='utf-8') as file:
+        # Read the raw header row
+        first_line = file.readline().strip()
+        headers = first_line.replace('"', '').split(',')  # Clean quotes and split
+        print("Processed Headers:", headers)  # Debugging step
+
+        # Rewind file and read the remaining data with corrected headers
+        file.seek(0)
+        reader = csv.DictReader(file, fieldnames=[headers[0], headers[1]])
+
+        # Initialize empty lists
+        operators = []
+        validate = []
+
+        # Skip the header row since we manually processed it
+        next(reader)
+
+        for row in reader:
+            operators.append(row[headers[0]].strip())  # Strip spaces
+            validate.append(int(row[headers[1]].strip()))  # Convert to int and strip spaces
+
+        # Store both lists in a dictionary
+        data_dict["operators"] = operators
+        data_dict["validate"] = validate
+
+    return data_dict
+
+# Example usage
+csv_file = r"C:\Users\franc\OneDrive\Bureaublad\codespace\Githubcode\Myprojects\Lets make math fun\make-math-fun-1\problems.csv"
+data = read_csv_to_dict(csv_file)
+
+print(data)
+
+
+
 class MathGameApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Math Game")
+        root.configure(bg="#008000")
         
         self.problem_label = tk.Label(root, text="Press 'New Problem' to start!", font=("Arial", 16))
         self.problem_label.pack(pady=10)
+
         
         self.entry = tk.Entry(root, font=("Arial", 14))
-        self.entry.pack(pady=10)
-        
-        self.submit_button = tk.Button(root, text="Submit Answer", command=self.check_answer)
-        self.submit_button.pack(pady=5)
-        
+        self.entry.pack(pady=10)        
+        self.entry.bind("<Return>", lambda event: self.check_answer())
+
         self.new_problem_button = tk.Button(root, text="New Problem", command=self.new_problem)
         self.new_problem_button.pack(pady=5)
         
