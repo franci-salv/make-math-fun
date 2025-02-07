@@ -55,7 +55,7 @@ def read_csv_to_dict(filename):
             validate.append(int(row[headers[1]].strip()))  # Convert to int and strip spaces
 
         # Store both lists in a dictionary
-        data_dict["operators"] = operators
+        data_dict["+"] = validate[0]
         data_dict["validate"] = validate
 
     return data_dict
