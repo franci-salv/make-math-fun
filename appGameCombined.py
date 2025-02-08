@@ -155,3 +155,5 @@ if __name__ == "__main__":
 #I need link the dictionary back to the csv file and the database to the button presses we'll figure out how that works
 #I need to automate the new problem generating thing
 #I wanna add difficulties that way player can do what they're in the mood for
+
+#I'm working on my blog
