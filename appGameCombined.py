@@ -159,3 +159,4 @@ if __name__ == "__main__":
 #I'm working on my blog
 #travelling but I'm learning about tkinter
 #too busy today no time to work on my side project :(
+#doing patch is taking a lot of time from me unfortunately
